@@ -54,38 +54,46 @@ start:
 
 	;Sensor1 comparison (unsigned)
 	CPI Sensor1, THRESHOLD
-	BRSH sensor1_low	;jump to here if sensor1 is less than threshold
+	BRSH sensor1_high	;jump to here if sensor1 is greater than or equal to threshold
 	;else
-	LDI R22, 0x46
+	LDI R22, 0x50		;sensor1 is less than threshold
 	RJMP store_s1_in2
-sensor1_low:
-	LDI R22, 0x50
+sensor1_high:
+	LDI R22, 0x46		;sensor1 is greater than or equal to threshold
 
 store_s1_in2:
-	LDI YH, high(0x0111)
-	LDI YL, low(0x0111)
+	LDI YH, high(0x0110)
+	LDI YL, low(0x0110)
+	;store first result in first results location
+	ST Y+, R22
 	;store sensor1 in second results location
-	ST Y+, Sensor1 
+	ST Y+, Sensor1
 
 
 	;Sensor2 comparison (signed)
 	CPI Sensor2, THRESHOLD
-	BRLT sensor2_low ;jump to here if sensor2 is less than threshold
+	BRLT sensor2_low	;jump to here if sensor2 is less than threshold
 	;else
-	LDI R22, 's'
+	LDI R22, 's'		;sensor2 is greater than or equal to threshold
 	RJMP s1_s2_compare
 sensor2_low:
-	LDI R22, 'i'
+	LDI R22, 'i'		;sensor2 is less than threshold
 
 s1_s2_compare:
+	;store third result in third results location
+	ST Y+, R22
 
-	;comparison between Sensor1 and Sensor2
+	;comparison between sensor1 and sensor2 (unsigned)
 	CP Sensor1, Sensor2
-	BRNE notequal
+	BRNE notequal		;jump to here if sensor1 is not equal to sensor2
 
-	LDI R22, 208
+	LDI R22, 108		;sensor1 is equal to sensor2
 	RJMP end
 notequal:
-	LDI R22, 115
+	LDI R22, 115		;sensor1 is not equal to sensor2
+
 end:
-NOP
+	;store fourth result in fourth results location
+	ST Y, R22
+
+	NOP
