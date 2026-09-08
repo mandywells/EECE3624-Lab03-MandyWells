@@ -1,5 +1,5 @@
 /**************************************************************************
- *     File: Lab03-MW.asm
+ *     File: Lab03.asm
  * Lab Name: Lab 03 - Decisions, Decisions, Decisions 
  *						reading data and making choices
  *   Author: Mandy Wells
