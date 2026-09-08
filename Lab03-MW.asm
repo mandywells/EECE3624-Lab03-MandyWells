@@ -1,12 +1,11 @@
 /**************************************************************************
- *     File: Lab03.asm
- * Lab Name: Lab 03
- *   Author: John Hutton
- *  Created: 09/16/2022
+ *     File: Lab03-MW.asm
+ * Lab Name: Lab 03 - Decisions, Decisions, Decisions 
+ *						reading data and making choices
+ *   Author: Mandy Wells
+ *  Created: 09/8/2026
  *
- * This program simulates reading sensor data and doing operations on them.
- * It uses memory locations for sensors and result writes.
- * We hope to learn more about branching in assembly.
+ * This program is written for Lab03
  *************************************************************************/
 
 /************************************************************************
