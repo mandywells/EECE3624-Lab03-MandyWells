@@ -27,6 +27,9 @@
  * NOTE:  For testing, you can modify these after loading them
  * to make sure all of your branches work properly
  ***********************************************************************/
+.equ THRESHOLD	= 0x90
+.def Sensor1	= R20
+.def Sensor2	= R21
 
 .org 0x0000 ; next instruction will be written to address 0x0000
             ; (the location of the reset vector)
@@ -42,3 +45,47 @@ main:       ; jump here on reset
 
     ;----------------------------------
     ; student-written code begins here    
+start:
+	LDI YH, high(0x0100)
+	LDI YL, low(0x0100)
+
+	LD Sensor1, Y+		;R20
+	LD Sensor2, Y		;R21
+
+	;Sensor1 comparison (unsigned)
+	CPI Sensor1, THRESHOLD
+	BRSH sensor1_low	;jump to here if sensor1 is less than threshold
+	;else
+	LDI R22, 0x46
+	RJMP store_s1_in2
+sensor1_low:
+	LDI R22, 0x50
+
+store_s1_in2:
+	LDI YH, high(0x0111)
+	LDI YL, low(0x0111)
+	;store sensor1 in second results location
+	ST Y+, Sensor1 
+
+
+	;Sensor2 comparison (signed)
+	CPI Sensor2, THRESHOLD
+	BRLT sensor2_low ;jump to here if sensor2 is less than threshold
+	;else
+	LDI R22, 's'
+	RJMP s1_s2_compare
+sensor2_low:
+	LDI R22, 'i'
+
+s1_s2_compare:
+
+	;comparison between Sensor1 and Sensor2
+	CP Sensor1, Sensor2
+	BRNE notequal
+
+	LDI R22, 208
+	RJMP end
+notequal:
+	LDI R22, 115
+end:
+NOP

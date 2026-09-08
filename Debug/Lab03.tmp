@@ -1,18 +1,18 @@
 <ASSEMBLER_INFO>
  <VERSION>2.2.8</VERSION>
  <DEVICE>"ATmega128A"</DEVICE>
- <WORKING_DIR>C:\Git\EECE3624-Lab03\Debug</WORKING_DIR>
+ <WORKING_DIR>C:\Users\anwells1\Documents\EECE3624-Lab03-MandyWells\Debug</WORKING_DIR>
  <INCLUDE_PATH>
   <DIR>C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc</DIR>
   <DIR>C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avrassembler\Include</DIR>
   <DIR></DIR>
  </INCLUDE_PATH>
- <SOURCE_FILE>C:\Git\EECE3624-Lab03\Lab03.asm</SOURCE_FILE>
+ <SOURCE_FILE>C:\Users\anwells1\Documents\EECE3624-Lab03-MandyWells\Lab03.asm</SOURCE_FILE>
  <INCLUDED_FILES>
   <FILE>C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\m128adef.inc</FILE>
  </INCLUDED_FILES>
  <OBJECT_FILES>
-  <FILE>C:\Git\EECE3624-Lab03\Debug\Lab03.obj</FILE>
+  <FILE>C:\Users\anwells1\Documents\EECE3624-Lab03-MandyWells\Debug\Lab03.obj</FILE>
  </OBJECT_FILES>
  <HEX_FILES>
   <FILE>Lab03.hex</FILE>
@@ -22,6 +22,13 @@
   <FILE>Lab03.lss</FILE>
  </OUTPUT_FILES>
  <LABELS>
-  <main><FILE>C:\Git\EECE3624-Lab03\Lab03.asm</FILE><LINE>40</LINE></main>
+  <main><FILE>C:\Users\anwells1\Documents\EECE3624-Lab03-MandyWells\Lab03.asm</FILE><LINE>38</LINE></main>
+  <start><FILE>C:\Users\anwells1\Documents\EECE3624-Lab03-MandyWells\Lab03.asm</FILE><LINE>48</LINE></start>
+  <sensor1_low><FILE>C:\Users\anwells1\Documents\EECE3624-Lab03-MandyWells\Lab03.asm</FILE><LINE>61</LINE></sensor1_low>
+  <store_s1_in2><FILE>C:\Users\anwells1\Documents\EECE3624-Lab03-MandyWells\Lab03.asm</FILE><LINE>64</LINE></store_s1_in2>
+  <sensor2_low><FILE>C:\Users\anwells1\Documents\EECE3624-Lab03-MandyWells\Lab03.asm</FILE><LINE>77</LINE></sensor2_low>
+  <s1_s2_compare><FILE>C:\Users\anwells1\Documents\EECE3624-Lab03-MandyWells\Lab03.asm</FILE><LINE>80</LINE></s1_s2_compare>
+  <notequal><FILE>C:\Users\anwells1\Documents\EECE3624-Lab03-MandyWells\Lab03.asm</FILE><LINE>88</LINE></notequal>
+  <end><FILE>C:\Users\anwells1\Documents\EECE3624-Lab03-MandyWells\Lab03.asm</FILE><LINE>90</LINE></end>
  </LABELS>
 </ASSEMBLER_INFO>

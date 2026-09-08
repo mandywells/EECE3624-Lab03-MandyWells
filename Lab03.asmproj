@@ -53,7 +53,7 @@
       </ToolNumber>
       <ToolName xmlns="">Simulator</ToolName>
     </com_atmel_avrdbg_tool_simulator>
-    <StimuliFile>C:\Git\EECE3624-Lab03\Lab03.stim</StimuliFile>
+    <StimuliFile>C:\Users\anwells1\Documents\EECE3624-Lab03-MandyWells\Lab03.stim</StimuliFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <ToolchainSettings>

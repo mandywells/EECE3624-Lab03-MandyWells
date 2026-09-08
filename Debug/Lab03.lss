@@ -1,5 +1,5 @@
 
-AVRASM ver. 2.2.8  C:\Git\EECE3624-Lab03\Lab03.asm Mon Sep 09 15:43:40 2024
+AVRASM ver. 2.2.8  C:\Users\anwells1\Documents\EECE3624-Lab03-MandyWells\Lab03.asm Tue Sep 08 16:43:51 2026
 
 [builtin](2): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\m128adef.inc'
 [builtin](2): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\m128adef.inc'
@@ -1224,18 +1224,13 @@ AVRASM ver. 2.2.8  C:\Git\EECE3624-Lab03\Lab03.asm Mon Sep 09 15:43:40 2024
                                  ; ***** END OF FILE ******************************************************
                                  
                                   *     File: Lab03.asm
-                                  * Lab Name: Lab 03
-                                  *   Author: John Hutton
-                                  *  Created: 09/16/2022
+                                  * Lab Name: Lab 03 - Decisions, Decisions, Decisions 
+                                  *						reading data and making choices
+                                  *   Author: Mandy Wells
+                                  *  Created: 09/8/2026
                                   *
-                                  * This program simulates reading sensor data and doing operations on them.
-                                  * It uses memory locations for sensors and result writes.
-                                  * We hope to learn more about branching in assembly.
+                                  * This program is written for Lab03
                                   *************************************************************************/
-                                 ;; EQU and DEF
-                                 .equ THRESHOLD	= 0x90
-                                 .def Sensor1	= R20
-                                 .def Sensor2	= R21
                                  
                                  /************************************************************************
                                   * NOTE!  To populate the sensor data to memory, follow these steps!
@@ -1256,6 +1251,9 @@ AVRASM ver. 2.2.8  C:\Git\EECE3624-Lab03\Lab03.asm Mon Sep 09 15:43:40 2024
                                   * NOTE:  For testing, you can modify these after loading them
                                   * to make sure all of your branches work properly
                                   ***********************************************************************/
+                                 .equ THRESHOLD	= 0x90
+                                 .def Sensor1	= R20
+                                 .def Sensor2	= R21
                                  
                                  .org 0x0000 ; next instruction will be written to address 0x0000
                                              ; (the location of the reset vector)
@@ -1271,6 +1269,49 @@ AVRASM ver. 2.2.8  C:\Git\EECE3624-Lab03\Lab03.asm Mon Sep 09 15:43:40 2024
                                  
                                      ;----------------------------------
                                      ; student-written code begins here    
+                                 start:
+000005 e0d1                      	LDI YH, high(0x0100)
+000006 e0c0                      	LDI YL, low(0x0100)
+                                 
+000007 9149                      	LD Sensor1, Y+		;R20
+000008 8158                      	LD Sensor2, Y		;R21
+                                 
+                                 	;Sensor1 comparison (unsigned)
+000009 3940                      	CPI Sensor1, THRESHOLD
+00000a f410                      	BRSH sensor1_low	;jump to here if sensor1 is less than threshold
+                                 	;else
+00000b e466                      	LDI R22, 0x46
+00000c c001                      	RJMP store_s1_in2
+                                 sensor1_low:
+00000d e560                      	LDI R22, 0x50
+                                 
+                                 store_s1_in2:
+00000e e0d1                      	LDI YH, high(0x0111)
+00000f e1c1                      	LDI YL, low(0x0111)
+                                 	;store sensor1 in second results location
+000010 9349                      	ST Y+, Sensor1 
+                                 
+                                 
+                                 	;Sensor2 comparison (signed)
+000011 3950                      	CPI Sensor2, THRESHOLD
+000012 f014                      	BRLT sensor2_low ;jump to here if sensor2 is less than threshold
+                                 	;else
+000013 e763                      	LDI R22, 's'
+000014 c001                      	RJMP s1_s2_compare
+                                 sensor2_low:
+000015 e669                      	LDI R22, 'i'
+                                 
+                                 s1_s2_compare:
+                                 
+                                 	;comparison between Sensor1 and Sensor2
+000016 1745                      	CP Sensor1, Sensor2
+000017 f411                      	BRNE notequal
+                                 
+000018 ed60                      	LDI R22, 208
+000019 c001                      	RJMP end
+                                 notequal:
+00001a e763                      	LDI R22, 115
+                                 end:
 
 
 RESOURCE USE INFORMATION
@@ -1288,40 +1329,40 @@ counted separately from r26..r31 here.
 .dseg memory usage only counts static data declared with .byte
 
 "ATmega128A" register use summary:
-x  :   0 y  :   0 z  :   0 r0 :   0 r1 :   0 r2 :   0 r3 :   0 r4 :   0 
+x  :   0 y  :   3 z  :   0 r0 :   0 r1 :   0 r2 :   0 r3 :   0 r4 :   0 
 r5 :   0 r6 :   0 r7 :   0 r8 :   0 r9 :   0 r10:   0 r11:   0 r12:   0 
-r13:   0 r14:   0 r15:   0 r16:   4 r17:   0 r18:   0 r19:   0 r20:   0 
-r21:   0 r22:   0 r23:   0 r24:   0 r25:   0 r26:   0 r27:   0 r28:   0 
-r29:   0 r30:   0 r31:   0 
-Registers used: 1 out of 35 (2.9%)
+r13:   0 r14:   0 r15:   0 r16:   4 r17:   0 r18:   0 r19:   0 r20:   4 
+r21:   3 r22:   6 r23:   0 r24:   0 r25:   0 r26:   0 r27:   0 r28:   2 
+r29:   2 r30:   0 r31:   0 
+Registers used: 7 out of 35 (20.0%)
 
 "ATmega128A" instruction use summary:
 .lds  :   0 .sts  :   0 adc   :   0 add   :   0 adiw  :   0 and   :   0 
 andi  :   0 asr   :   0 bclr  :   0 bld   :   0 brbc  :   0 brbs  :   0 
 brcc  :   0 brcs  :   0 break :   0 breq  :   0 brge  :   0 brhc  :   0 
-brhs  :   0 brid  :   0 brie  :   0 brlo  :   0 brlt  :   0 brmi  :   0 
-brne  :   0 brpl  :   0 brsh  :   0 brtc  :   0 brts  :   0 brvc  :   0 
+brhs  :   0 brid  :   0 brie  :   0 brlo  :   0 brlt  :   1 brmi  :   0 
+brne  :   1 brpl  :   0 brsh  :   1 brtc  :   0 brts  :   0 brvc  :   0 
 brvs  :   0 bset  :   0 bst   :   0 call  :   0 cbi   :   0 cbr   :   0 
 clc   :   0 clh   :   0 cli   :   0 cln   :   0 clr   :   0 cls   :   0 
-clt   :   0 clv   :   0 clz   :   0 com   :   0 cp    :   0 cpc   :   0 
-cpi   :   0 cpse  :   0 dec   :   0 elpm  :   0 eor   :   0 fmul  :   0 
+clt   :   0 clv   :   0 clz   :   0 com   :   0 cp    :   1 cpc   :   0 
+cpi   :   2 cpse  :   0 dec   :   0 elpm  :   0 eor   :   0 fmul  :   0 
 fmuls :   0 fmulsu:   0 icall :   0 ijmp  :   0 in    :   0 inc   :   0 
-jmp   :   0 ld    :   0 ldd   :   0 ldi   :   2 lds   :   0 lpm   :   0 
+jmp   :   0 ld    :   2 ldd   :   0 ldi   :  12 lds   :   0 lpm   :   0 
 lsl   :   0 lsr   :   0 mov   :   0 movw  :   0 mul   :   0 muls  :   0 
-mulsu :   0 neg   :   0 nop   :   0 or    :   0 ori   :   0 out   :   2 
-pop   :   0 push  :   0 rcall :   0 ret   :   0 reti  :   0 rjmp  :   1 
+mulsu :   0 neg   :   0 nop   :   1 or    :   0 ori   :   0 out   :   2 
+pop   :   0 push  :   0 rcall :   0 ret   :   0 reti  :   0 rjmp  :   4 
 rol   :   0 ror   :   0 sbc   :   0 sbci  :   0 sbi   :   0 sbic  :   0 
 sbis  :   0 sbiw  :   0 sbr   :   0 sbrc  :   0 sbrs  :   0 sec   :   0 
 seh   :   0 sei   :   0 sen   :   0 ser   :   0 ses   :   0 set   :   0 
-sev   :   0 sez   :   0 sleep :   0 spm   :   0 st    :   0 std   :   0 
+sev   :   0 sez   :   0 sleep :   0 spm   :   0 st    :   1 std   :   0 
 sts   :   0 sub   :   0 subi  :   0 swap  :   0 tst   :   0 wdr   :   0 
 
-Instructions used: 3 out of 114 (2.6%)
+Instructions used: 11 out of 114 (9.6%)
 
 "ATmega128A" memory use summary [bytes]:
 Segment   Begin    End      Code   Data   Used    Size   Use%
 ---------------------------------------------------------------
-[.cseg] 0x000000 0x00000a     10      0     10  131072   0.0%
+[.cseg] 0x000000 0x000038     56      0     56  131072   0.0%
 [.dseg] 0x000100 0x000100      0      0      0    4096   0.0%
 [.eseg] 0x000000 0x000000      0      0      0    4096   0.0%
 
